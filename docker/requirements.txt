@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+motor
+pydantic
+python-dotenv
+qdrant-client
+PyMuPDF
+openai
+passlib
+python-jose
