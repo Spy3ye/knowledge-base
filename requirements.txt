@@ -8,3 +8,8 @@ PyMuPDF
 openai
 passlib
 python-jose
+requests
+passlib[bcrypt]
+pydantic[email]
+
+

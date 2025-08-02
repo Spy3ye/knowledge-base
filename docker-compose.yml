@@ -5,14 +5,17 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "5000:5000"
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/ai_kb
+      - MONGO_DB=ai_kb
     volumes:
       - .:/app
     env_file:
-      - ../app/.env
+      - .env
     depends_on:
       - mongo
-    network_mode: bridge
+    network_mode: "bridge"
 
   mongo:
     image: mongo:6
@@ -21,9 +24,15 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: kylinja
+      MONGO_INITDB_ROOT_PASSWORD: NoUzmongA7GDKN9L
+
+  
 
 volumes:
   mongo_data:
+  qdrant_data:
 
 # networks:
 #   my_network:

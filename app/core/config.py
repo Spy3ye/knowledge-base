@@ -1,12 +1,14 @@
-from pydantic import BaseSettings
-
+# from pydantic import BaseSettings
+from pydantic_settings import BaseSettings , SettingsConfigDict
 
 class Settings(BaseSettings):
-    MONGO_URI: str
-    MONGO_DB: str
+    mongo_uri: str
+    database_name: str
+    secret_key: str
+    algorithm: str
+    access_token_expire_minutes: int
+    # qdrant_host: str
+    # qdrant_port: int
 
-    class Config:
-        env_file = ".env"
-
-
+    model_config = SettingsConfigDict(extra="allow", env_file=".env")
 settings = Settings()
