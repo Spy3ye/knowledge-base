@@ -5,20 +5,17 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "8000:8000"
-<<<<<<< HEAD:docker-compose.yml
+      - "8080:8000"
     environment:
       - MONGO_URI=mongodb://mongo:27017/ai_kb
       - MONGO_DB=ai_kb
-=======
->>>>>>> c9417795ae8d2d45709ed15af76d7fc78b3a3f73:docker/docker-compose.yml
     volumes:
       - .:/app
     env_file:
       - .env
     depends_on:
       - mongo
-    network_mode: "bridge"
+    network_mode: bridge
 
   mongo:
     image: mongo:6
@@ -31,11 +28,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: kylinja
       MONGO_INITDB_ROOT_PASSWORD: NoUzmongA7GDKN9L
 
-  
-
 volumes:
   mongo_data:
-  qdrant_data:
 
 # networks:
 #   my_network:
