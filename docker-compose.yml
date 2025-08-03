@@ -6,9 +6,12 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "8000:8000"
+<<<<<<< HEAD:docker-compose.yml
     environment:
       - MONGO_URI=mongodb://mongo:27017/ai_kb
       - MONGO_DB=ai_kb
+=======
+>>>>>>> c9417795ae8d2d45709ed15af76d7fc78b3a3f73:docker/docker-compose.yml
     volumes:
       - .:/app
     env_file:
