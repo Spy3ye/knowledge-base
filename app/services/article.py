@@ -26,7 +26,9 @@ async def get_article_by_id(article_id: str):
 
 async def get_articles_by_tag(tag: str):
     articles = db["articles"].find({"tags": tag})
-    return [dict(a, _id=str(a["_id"])) async for a in articles]
+    if articles :
+        return [dict(a, _id=str(a["_id"])) async for a in articles]
+    return None
 
 async def get_articles_by_category(category: str):
     articles = db["articles"].find({"category": category})
