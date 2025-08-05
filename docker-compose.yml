@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "8080:8000"
+      - "9090:8000"
     environment:
       - MONGO_URI=mongodb://mongo:27017/ai_kb
       - MONGO_DB=ai_kb
@@ -21,7 +21,7 @@ services:
     image: mongo:6
     restart: always
     ports:
-      - "27017:27017"
+      - "9090:8000"
     volumes:
       - mongo_data:/data/db
     environment:

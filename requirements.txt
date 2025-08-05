@@ -11,5 +11,8 @@ python-jose
 requests
 passlib[bcrypt]
 pydantic[email]
+pydantic_settings
+odmantic
+
 
 
