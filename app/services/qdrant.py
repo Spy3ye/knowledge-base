@@ -49,7 +49,7 @@ def semantic_search(collection: str, query: str, limit: int = 2):
     return results
 
 async def create_text_index(db, collection: str):
-    if "text_index" not in db[collection].index_information():
+    if "text_index" not in await db[collection].index_information():
         db[collection].create_index(
             [("title", "text"), ("content", "text")],
             name="text_index"

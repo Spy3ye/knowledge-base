@@ -8,13 +8,13 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def on_startup():
-    db = get_database()
+    db = await get_database()
     init_qdrant_collection("articles")
     init_qdrant_collection("categories")
     init_qdrant_collection("tags")
-    create_text_index(db, "articles")
-    create_text_index(db, "categories")
-    create_text_index(db, "tags")
+    await create_text_index(db, "articles")
+    await create_text_index(db, "categories")
+    await create_text_index(db, "tags")
 
 app.include_router(auth.router)
 app.include_router(tag.router)
