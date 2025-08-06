@@ -1,9 +1,13 @@
 # from app.models.article import article_collection
 from app.schemas.article import ArticleCreate
 from app.db.mongo import db
+from app.services.qdrant import insert_vector
 
 async def create_article(article: ArticleCreate):
     result = await db["articles"].insert_one(article.dict())
+    mongo_id = str(result.inserted_id)
+    text = article.title + " " + article.body
+    insert_vector("articles",mongo_id,text)
     return str(result.inserted_id)
 
 async def list_articles():
@@ -20,8 +24,6 @@ async def get_article_by_id(article_id: str):
     article = await db["articles"].find_one({"_id": article_id})
     if article:
         return dict(article, _id=str(article["_id"]))
-        # return [dict(c, _id=str(c["_id"])) async for c in articles]
-
     return None
 
 async def get_articles_by_tag(tag: str):

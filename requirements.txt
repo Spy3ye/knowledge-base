@@ -13,6 +13,6 @@ passlib[bcrypt]
 pydantic[email]
 pydantic_settings
 odmantic
-
-
-
+qdrant-client[fastembed]
+pymongo
+sentence-transformers
