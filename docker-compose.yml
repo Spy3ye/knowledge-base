@@ -5,28 +5,39 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "9090:8000"
+      - "8000:8000"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/ai_kb
+      - MONGO_URI=mongodb+srv://kylinja:NoUzmongA7GDKN9L@cluster0.98u39r2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       - MONGO_DB=ai_kb
+      - qdrant_url=https://6b24ab4a-19c4-4b0f-a49a-dae14c989412.eu-central-1-0.aws.cloud.qdrant.io:6333
+      - qdrant_api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.gdcq72AhajStXQmYd9Gcn4MdN-Y7VI2OckKe8i_f_Hg
     volumes:
       - .:/app
     env_file:
       - .env
-    depends_on:
-      - mongo
+    # depends_on:
+    #   - mongo
+    #   - qdrant
     network_mode: bridge
 
-  mongo:
-    image: mongo:6
-    restart: always
-    ports:
-      - "9090:8000"
-    volumes:
-      - mongo_data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: kylinja
-      MONGO_INITDB_ROOT_PASSWORD: NoUzmongA7GDKN9L
+  # mongo:
+  #   image: mongo:6
+  #   restart: always
+  #   ports:
+  #     - "9090:8000"
+  #   volumes:
+  #     - mongo_data:/data/db
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: kylinja
+  #     MONGO_INITDB_ROOT_PASSWORD: NoUzmongA7GDKN9L
+  
+  # qdrant:
+  #   image: qdrant/qdrant:latest
+  #   container_name: knowledge-base-qdrant
+  #   ports:
+  #     - "6333:6333"
+  #   volumes:
+  #     - qdrant_data:/qdrant/storage
 
 volumes:
   mongo_data:

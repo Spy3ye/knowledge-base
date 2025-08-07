@@ -16,3 +16,5 @@ odmantic
 qdrant-client[fastembed]
 pymongo
 sentence-transformers
+pyPDF2
+python-multipart
