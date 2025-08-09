@@ -54,15 +54,15 @@ async def upload_file(file: UploadFile = File(...)):
     return {"id": str(result.inserted_id), "filename": file.filename, "preview": content[:300]}
 
 
-async def get_document(doc_id: str):
+async def get_document(file_name: str):
     db = await get_database()
 
-    try:
-        obj_id = ObjectId(doc_id)
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid document ID")
+    # try:
+    #     obj_id = ObjectId(file_name)
+    # except Exception:
+    #     raise HTTPException(status_code=400, detail="Invalid document ID")
 
-    doc = await db["documents"].find_one({"_id": obj_id})
+    doc = await db["documents"].find_one({"filename": file_name})
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
 

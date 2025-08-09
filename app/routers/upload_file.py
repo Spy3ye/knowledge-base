@@ -16,6 +16,6 @@ router = APIRouter()
 async def upload_file(file: UploadFile = File(...)):
     return await upload_file(file)
 
-@router.get("/document/{doc_id}")
-async def get_document_endpoint(doc_id: str):
-    return await get_document(doc_id)
+@router.get("/document/{file_name}")
+async def get_document_endpoint(file_name: str):
+    return await get_document(file_name)
