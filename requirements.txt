@@ -18,3 +18,5 @@ pymongo
 sentence-transformers
 pyPDF2
 python-multipart
+pytest
+pytest-asyncio

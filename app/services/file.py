@@ -32,16 +32,23 @@ async def upload_file(file: UploadFile = File(...)):
     
     if len(content) > 2000:
         chunks = chunk_text(content)
+        db = await get_database()
+        doc = {"filename": file.filename, "content": chunks[0]}
+        result = await db["documents"].insert_one(doc)
+        mongo_id = str(result.inserted_id)
+        text = file.filename + " " + content
+        insert_vector("documents",mongo_id,text)
     else:
         chunks = [content]
+        db = await get_database()
+        doc = {"filename": file.filename, "content": chunks}
+        result = await db["documents"].insert_one(doc)
+        mongo_id = str(result.inserted_id)
+        text = file.filename + " " + content
+        insert_vector("documents",mongo_id,text)
 
 
-    db = await get_database()
-    doc = {"filename": file.filename, "content": content}
-    result = await db["documents"].insert_one(doc)
-    mongo_id = str(result.inserted_id)
-    text = file.filename + " " + content
-    insert_vector("documents",mongo_id,text)
+    
     # return str(result.inserted_id)
 
     # Embed and store in Qdrant
@@ -51,7 +58,7 @@ async def upload_file(file: UploadFile = File(...)):
     #     content=content
     # )
 
-    return {"id": str(result.inserted_id), "filename": file.filename, "preview": content[:300]}
+    return {"id": str(result.inserted_id), "filename": file.filename, "preview": chunks[:300]}
 
 
 async def get_document(file_name: str):
