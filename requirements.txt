@@ -20,3 +20,5 @@ pyPDF2
 python-multipart
 pytest
 pytest-asyncio
+smtplib
+os
