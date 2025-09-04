@@ -17,7 +17,7 @@ async def get_user_by_email(email: str) -> User | None:
 async def get_user_by_id(user_id: str) -> User | None:
     return await db["users"].find_one({"_id": user_id})
 
-def send_verification_email():
+def send_verification_email(user_email: str, token: str):
     verify_link = f"http://localhost:8000/auth/verify-email?token={token}"
     subject = "Verify your email"
     body = f"""
@@ -25,10 +25,11 @@ def send_verification_email():
     <p>Please click the link below to verify your email:</p>
     <a href="{verify_link}">{verify_link}</a>
     """
-    send_email()
+    send_email(subject, user_email, body)
 
 
-def send_password_reset_email():
+
+def send_password_reset_email(user_email: str, token: str):
     reset_link = f"http://localhost:8000/auth/reset-password?token={token}"
     subject = "Reset your password"
     body = f"""
@@ -36,4 +37,4 @@ def send_password_reset_email():
     <p>Click below to reset your password:</p>
     <a href="{reset_link}">{reset_link}</a>
     """
-    send_email()
+    send_email(subject, user_email, body)

@@ -6,20 +6,17 @@ import os
 
 load_dotenv()
 
-# EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
-# EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
-
-EMAIL_ADDRESS="kylinja@gmail.com"
-EMAIL_PASSWORD="rjmgzouxmqmszytc"
+EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 
-def send_email():
-    msg = MIMEMultipart("Hello, this is a plain text email.")
+def send_email(subject: str, recipient: str, body: str):
+    msg = MIMEMultipart()
     msg["From"] = EMAIL_ADDRESS
-    msg["To"] = EMAIL_ADDRESS
-    msg["Subject"] = "test email"
+    msg["To"] = recipient
+    msg["Subject"] = subject
 
-    # msg.attach(MIMEText(body, "html"))
+    msg.attach(MIMEText(body, "html"))
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
@@ -27,11 +24,8 @@ def send_email():
                 server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             except Exception as e:
                 print("error logging in :",e)
-                server.sendmail(EMAIL_ADDRESS, EMAIL_ADDRESS, msg.as_string())
-        # return True
+            server.sendmail(EMAIL_ADDRESS, recipient, msg.as_string())
+        return True
     except Exception as e:
         print("Error sending email:", e)
-        # return False
-    print("email sent")
-    
-    send_email()
+        return False

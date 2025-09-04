@@ -22,6 +22,7 @@ async def login(user_in: UserLogin , db= Depends(get_database)):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = create_access_token({"sub": str(user["_id"])}, expires_minutes=60)
     return {"access_token": token, "token_type": "bearer"}
+
 # @router.get("/me", response_model=UserOut)
 # async def get_current_user(current_user: UserOut = Depends(get_current_user)):
 #     if not current_user:
@@ -35,12 +36,12 @@ async def forgot_password(email: str , db=Depends(get_database)):
         raise HTTPException(status_code=404, detail="User not found")
 
     token = create_access_token({"sub": str(user["_id"])}, expires_minutes=30)
-    send_password_reset_email()
+    send_password_reset_email(email, token)
     return {"message": "Password reset email sent"}
 
 @router.post("/send-verification")
-async def send_verification(user: UserOut):
+async def send_verification(user: UserLogin):
     token = create_access_token({"sub": user.email}, expires_minutes=60)
-    send_verification_email()
+    send_verification_email(user.email, token)
     return {"message": "Verification email sent"}
 
